@@ -1,8 +1,9 @@
 import subprocess
 import sys
 import argparse
-import ffmpeg
-import parse
+import comm_generation
+import discogs
+
 
 def setUpParser():
     parser = argparse.ArgumentParser()
@@ -29,10 +30,10 @@ if __name__ == '__main__':
     if args.url is not None:
         pass
     else:
-        track_data = parse.commands_from_file(args.file, args.delim)
+        track_data = comm_generation.trackdata_from_file(args.commfile, args.delim)
     
-    ffmpeg.run_ffmpeg(
-            ffmpeg.gen_ffmpeg_commands(
+    comm_generation.run_ffmpeg(
+            comm_generation.gen_ffmpeg_commands(
                 args.audio_file,
                 track_data,
                 args.artist
