@@ -5,12 +5,12 @@ from util import gen_timedeltas
 
 class DiscogsRetriever(RetrieverBase):
 
-    def __init__(self):
-        pass 
+    def __init__(self, data_source):
+        super().__init__(data_source)
     
-    def retrieve_trackdata(self, data_source):
+    def retrieve_trackdata(self):
         # parse the url and extrac the release number
-        parsed_url = urlparse(data_source)
+        parsed_url = urlparse(self.data_source)
         if parsed_url.netloc != 'www.discogs.com':
             raise ValueError("unsupported URL: hostname is not of type www.discogs.com")
 

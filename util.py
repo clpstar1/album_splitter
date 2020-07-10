@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import subprocess
 
 # format ["mm:ss", "mm:ss"]
 def gen_timedeltas(durations, delim=':'):
@@ -18,3 +19,7 @@ def gen_timedeltas(durations, delim=':'):
         # increment the start time to the fit the start time of the next song 
         start += duration_td
     return deltas
+
+def run_ffmpeg(ffmpeg_commands):
+        for command in ffmpeg_commands:
+            subprocess.call(command)

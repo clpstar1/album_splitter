@@ -1,7 +1,7 @@
 import subprocess
 import sys
 import argparse
-import comm_generation
+from comm_generation import FFMPEGBuilder
 from base import FileRetriever
 from discogs import DiscogsRetriever
 
@@ -28,14 +28,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     if args.url is not None:
-        track_data = DiscogsRetriever().retrieve_trackdata(args.url)
+        FFMPEGBuilder(DiscogsRetriever(args.url), args.audio_file).run()
     else:
-        track_data = FileRetriever(args.delim).retrieve_trackdata(args.commfile)
+        FFMPEGBuilder(FileRetriever(args.commfile, args.delim), args.audio_file).run()
     
-    comm_generation.run_ffmpeg(
-            comm_generation.gen_ffmpeg_commands(
-                args.audio_file,
-                track_data,
-                args.artist
-            )
-        )
