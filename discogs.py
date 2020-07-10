@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
 import requests
 from base import RetrieverBase
-from util import gen_timedeltas
+from util import gen_timedeltas, uniquify
 
 class DiscogsRetriever(RetrieverBase):
 
@@ -40,4 +40,4 @@ class DiscogsRetriever(RetrieverBase):
         # - ["title1", "title2"...] 
         # - [("start1, end1", "start2, end2")]
         # -> [("title1, start1, end1"), ("title2, start2, end2")]
-        return [(ti,) + td for ti, td in zip (titles, timedeltas)]
+        return [(ti,) + td for ti, td in zip (uniquify(list(titles)), timedeltas)]

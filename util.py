@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import subprocess
+from collections import Counter
 
 # format ["mm:ss", "mm:ss"]
 def gen_timedeltas(durations, delim=':'):
@@ -23,3 +24,17 @@ def gen_timedeltas(durations, delim=':'):
 def run_ffmpeg(ffmpeg_commands):
         for command in ffmpeg_commands:
             subprocess.call(command)
+
+
+# credits: https://stackoverflow.com/questions/30650474/python-rename-duplicates-in-list-with-progressive-numbers-without-sorting-list
+def uniquify(str_list):
+    counts = {k:v for k,v in Counter(str_list).items() if v > 1}
+    newlist = str_list[:]
+
+    for i in reversed(range(len(str_list))):
+        item = str_list[i]
+        if item in counts and counts[item]:
+            newlist[i] += str(counts[item])
+            counts[item]-=1
+    
+    return newlist

@@ -14,21 +14,33 @@ def setUpParser():
     group.add_argument('--url')
     group.add_argument('--commfile')
 
+    parser.add_argument('--o',
+        default='.'
+    )
+
+    parser.add_argument('--x',
+        default='mp3'
+    )
+
     parser.add_argument('--delim',
         default=','
     )
-    parser.add_argument('--artist',
-        default=''
-    )
+
     return parser
 
 if __name__ == '__main__':
     
     parser = setUpParser()
-    args = parser.parse_args()
-    
+    args = parser.parse_args() 
+
     if args.url is not None:
-        FFMPEGBuilder(DiscogsRetriever(args.url), args.audio_file).run()
+        FFMPEGBuilder(
+            DiscogsRetriever(args.url),
+            args.audio_file, args.o, args.x
+            ).run()
     else:
-        FFMPEGBuilder(FileRetriever(args.commfile, args.delim), args.audio_file).run()
+        FFMPEGBuilder(
+            FileRetriever(args.commfile, args.delim),
+            args.audio_file, args.o, args.x
+            ).run()
     
