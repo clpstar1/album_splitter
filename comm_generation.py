@@ -3,26 +3,6 @@ from util import gen_timedeltas
 
 ffmpeg_template_str = 'ffmpeg -i AUDIO_FILE -acodec copy -ss START_TIME -to END_TIME'
 
-def trackdata_from_file(command_file, delim):
-    with open(command_file) as file:
-        ## read all those line 
-        lines = file.readlines()
-    
-    # remove newlines and split on delim
-    de_newlined = [line.rstrip('\n').split(delim) for line in lines]
-    
-    # generator-expressions for lazy eval
-    titles = (td_pair[0] for td_pair in de_newlined)
-    durations = (td_pair[1] for td_pair in de_newlined)
-    
-    timedeltas = gen_timedeltas(durations)
-    
-    # join together two lists of form:
-    # - ["title1", "title2"...] 
-    # - [("start1, end1", "start2, end2")]
-    # -> [("title1, start1, end1"), ("title2, start2, end2")]
-    return [(ti,) + td for ti, td in zip (titles, timedeltas)]
-
 def gen_ffmpeg_commands(audio_file, track_data, artist):
     
     tmp = list(filter(lambda t_info : len(t_info) != 3, track_data))

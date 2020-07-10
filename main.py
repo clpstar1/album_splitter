@@ -2,7 +2,8 @@ import subprocess
 import sys
 import argparse
 import comm_generation
-import discogs
+from base import FileRetriever
+from discogs import DiscogsRetriever
 
 
 def setUpParser():
@@ -26,11 +27,10 @@ if __name__ == '__main__':
     parser = setUpParser()
     args = parser.parse_args()
     
-    # fetch from discogs, not implemented yet
     if args.url is not None:
-        track_data = discogs.trackdata_from_discogs(args.url)
+        track_data = DiscogsRetriever().retrieve_trackdata(args.url)
     else:
-        track_data = comm_generation.trackdata_from_file(args.commfile, args.delim)
+        track_data = FileRetriever(args.delim).retrieve_trackdata(args.commfile)
     
     comm_generation.run_ffmpeg(
             comm_generation.gen_ffmpeg_commands(
