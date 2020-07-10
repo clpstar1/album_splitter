@@ -28,7 +28,7 @@ if __name__ == '__main__':
     
     # fetch from discogs, not implemented yet
     if args.url is not None:
-        pass
+        track_data = discogs.trackdata_from_discogs(args.url)
     else:
         track_data = comm_generation.trackdata_from_file(args.commfile, args.delim)
     
