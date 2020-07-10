@@ -26,7 +26,7 @@ def run_ffmpeg(ffmpeg_commands):
             subprocess.call(command)
 
 
-# credits: https://stackoverflow.com/questions/30650474/python-rename-duplicates-in-list-with-progressive-numbers-without-sorting-list
+# credit: https://stackoverflow.com/questions/30650474/python-rename-duplicates-in-list-with-progressive-numbers-without-sorting-list
 def uniquify(str_list):
     counts = {k:v for k,v in Counter(str_list).items() if v > 1}
     newlist = str_list[:]
