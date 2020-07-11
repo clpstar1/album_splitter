@@ -1,6 +1,6 @@
 from urllib.parse import urlparse
 import requests
-from base import RetrieverBase
+from retrieverbase import RetrieverBase
 from util import gen_timedeltas, uniquify
 
 class DiscogsRetriever(RetrieverBase):
@@ -32,12 +32,10 @@ class DiscogsRetriever(RetrieverBase):
         
         tracklist = response["tracklist"]
 
+        if tracklist is None:
+            raise ValueError("Could not find \"tracklist\" entry in http reponse")
+
         titles = (tr["title"] for tr in tracklist)
         durations = (tr["duration"] for tr in tracklist)
         
-        timedeltas = gen_timedeltas(durations)
-        # join together two lists of form:
-        # - ["title1", "title2"...] 
-        # - [("start1, end1", "start2, end2")]
-        # -> [("title1, start1, end1"), ("title2, start2, end2")]
-        return [(ti,) + td for ti, td in zip (uniquify(list(titles)), timedeltas)]
+        return super().gen_track_infos(titles, durations)
