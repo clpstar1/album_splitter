@@ -33,7 +33,6 @@ class FFMPEGBuilder():
         for title, start, end in track_data:
 
             def map_entries(entry):
-                print(entry + '\n') 
                 if      entry   == "START_TIME" : return start 
                 elif    entry   == "END_TIME"   : return end
                 elif    entry   == "AUDIO_FILE" : return self.audio_file

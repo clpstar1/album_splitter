@@ -32,6 +32,9 @@ class DiscogsRetriever(RetrieverBase):
         
         tracklist = response["tracklist"]
 
+        if tracklist is None:
+            raise ValueError("Could not find \"tracklist\" entry in http reponse")
+
         titles = (tr["title"] for tr in tracklist)
         durations = (tr["duration"] for tr in tracklist)
         
