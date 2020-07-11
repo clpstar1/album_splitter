@@ -38,4 +38,4 @@ class DiscogsRetriever(RetrieverBase):
         titles = (tr["title"] for tr in tracklist)
         durations = (tr["duration"] for tr in tracklist)
         
-        return super().gen_commands(titles, durations)
+        return super().gen_track_infos(titles, durations)

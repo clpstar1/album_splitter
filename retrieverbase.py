@@ -8,7 +8,7 @@ class RetrieverBase():
     def retrieve_trackdata(self, data_source):
         pass
 
-    def gen_commands(self, titles, durations):
+    def gen_track_infos(self, titles, durations):
         timedeltas = gen_timedeltas(durations)
         # join together two lists of form:
         # - ["title1", "title2"...] 
@@ -33,4 +33,4 @@ class FileRetriever(RetrieverBase):
         titles = (td_pair[0] for td_pair in de_newlined)
         durations = (td_pair[1] for td_pair in de_newlined)
         
-        return super().gen_commands(titles, durations)
+        return super().gen_track_infos(titles, durations)
