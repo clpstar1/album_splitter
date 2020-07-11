@@ -1,4 +1,4 @@
-from util import gen_timedeltas
+from util import gen_timedeltas, uniquify
 
 class RetrieverBase():
 
@@ -6,7 +6,15 @@ class RetrieverBase():
         self.data_source = data_source
     
     def retrieve_trackdata(self, data_source):
-        pass 
+        pass
+
+    def gen_commands(self, titles, durations):
+        timedeltas = gen_timedeltas(durations)
+        # join together two lists of form:
+        # - ["title1", "title2"...] 
+        # - [("start1, end1", "start2, end2")]
+        # -> [("title1, start1, end1"), ("title2, start2, end2")]
+        return [(ti,) + td for ti, td in zip (uniquify(list(titles)), timedeltas)]
 
 class FileRetriever(RetrieverBase):
 
@@ -25,11 +33,4 @@ class FileRetriever(RetrieverBase):
         titles = (td_pair[0] for td_pair in de_newlined)
         durations = (td_pair[1] for td_pair in de_newlined)
         
-        timedeltas = gen_timedeltas(durations)
-        
-        # join together two lists of form:
-        # - ["title1", "title2"...] 
-        # - [("start1, end1", "start2, end2")]
-        # -> [("title1, start1, end1"), ("title2, start2, end2")]
-        return [(ti,) + td for ti, td in zip (titles, timedeltas)]
-
+        return super().gen_commands(titles, durations)

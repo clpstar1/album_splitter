@@ -2,7 +2,7 @@ import subprocess
 import sys
 import argparse
 from commandbuilder import FFMPEGBuilder
-from base import FileRetriever
+from retrieverbase import FileRetriever
 from discogs import DiscogsRetriever
 
 
