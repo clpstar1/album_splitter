@@ -4,14 +4,16 @@ from util import gen_timedeltas, run_ffmpeg
 
 class FFMPEGBuilder():
 
-    def __init__(self, retriever, audio_file, out_dir='.', out_format='mp3'):
+    def __init__(self, retriever, audio_file, out_dir='.'):
         self.retriever = retriever
         self.audio_file = audio_file
         self.out_dir = out_dir
-        self.out_format = out_format
+        # use extension of the original file
+        self.out_format = self.audio_file.split(".")[-1]
 
         self.template_str = 'ffmpeg -i AUDIO_FILE -acodec copy -ss START_TIME -to END_TIME OUTPUT_DIR/FILE.EXTENSION'
     
+
     def run(self):
         track_data = self.retriever.retrieve_trackdata()
         ffmpeg_comms = self.gen_ffmpeg_commands(track_data)

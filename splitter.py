@@ -1,7 +1,7 @@
 import subprocess
 import sys
 import argparse
-from comm_generation import FFMPEGBuilder
+from commandbuilder import FFMPEGBuilder
 from base import FileRetriever
 from discogs import DiscogsRetriever
 
@@ -14,12 +14,9 @@ def setUpParser():
     group.add_argument('--url')
     group.add_argument('--commfile')
 
-    parser.add_argument('--o',
+    parser.add_argument('-o',
+        metavar="OUTPUT_DIR",
         default='.'
-    )
-
-    parser.add_argument('--x',
-        default='mp3'
     )
 
     parser.add_argument('--delim',
@@ -36,11 +33,11 @@ if __name__ == '__main__':
     if args.url is not None:
         FFMPEGBuilder(
             DiscogsRetriever(args.url),
-            args.audio_file, args.o, args.x
+            args.audio_file, args.o
             ).run()
     else:
         FFMPEGBuilder(
             FileRetriever(args.commfile, args.delim),
-            args.audio_file, args.o, args.x
+            args.audio_file, args.o
             ).run()
     

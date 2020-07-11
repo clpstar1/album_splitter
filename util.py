@@ -28,6 +28,10 @@ def run_ffmpeg(ffmpeg_commands):
 
 # credit: https://stackoverflow.com/questions/30650474/python-rename-duplicates-in-list-with-progressive-numbers-without-sorting-list
 def uniquify(str_list):
+    """
+    AutoIndex Strings that occur > 1 in a List of Strings
+    ["a", "b", "b"] -> ["a", "b1", "b2"]
+    """
     counts = {k:v for k,v in Counter(str_list).items() if v > 1}
     newlist = str_list[:]
 
